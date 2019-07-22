@@ -1,4 +1,4 @@
-# todo-firesql
+# TODO FireSQL
 
 > My luminous Nuxt.js project
 
