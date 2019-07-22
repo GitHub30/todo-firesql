@@ -63,8 +63,8 @@ export default {
     })
   },
   // eslint-disable-next-line vue/order-in-components
-  mounted() {
-    window.syncState({
+  created() {
+    this.$store.dispatch('SYNC_STATE', {
       table: 'json',
       pkColumnName: 'id',
       pk: 101,

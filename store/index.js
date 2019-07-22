@@ -1,12 +1,12 @@
-export const state = () => ({
-  counter: 0
-})
+import { vuexfiresqlActions, vuexfiresqlMutations } from '../plugins/index'
 
 export const mutations = {
   increment(state) {
     state.counter++
   },
-  STORE_STATE(state, newState) {
-    this.replaceState(newState)
-  }
+  ...vuexfiresqlMutations
+}
+
+export const actions = {
+  ...vuexfiresqlActions
 }
