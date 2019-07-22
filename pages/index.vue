@@ -63,7 +63,13 @@ export default {
     })
   },
   // eslint-disable-next-line vue/order-in-components
-  created() {
+  async created() {
+    await this.$db.query(
+      'CREATE TABLE IF NOT EXISTS messages (message_id int NOT NULL AUTO_INCREMENT, username VARCHAR(255), message VARCHAR(255), PRIMARY KEY(message_id))'
+    )
+    await this.$db.query(
+      'CREATE TABLE IF NOT EXISTS json (id int NOT NULL, json JSON, PRIMARY KEY(id))'
+    )
     this.$store.dispatch('SYNC_STATE', {
       table: 'json',
       pkColumnName: 'id',
