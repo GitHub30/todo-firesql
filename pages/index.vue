@@ -1,6 +1,22 @@
+/* eslint-disable no-console */
 <template>
   <div class="container">
     <div>
+      <ul>
+        <li v-for="(todo, index) in $store.state.todos.list" :key="index">
+          <!-- eslint-disable-next-line vue/html-closing-bracket-spacing -->
+          <!-- eslint-disable-next-line prettier/prettier -->
+          <input type="checkbox" :checked="todo.done" @change="toggle(todo)">
+          <span :class="{ done: todo.done }">{{ todo.text }}</span>
+        </li>
+        <li>
+          <form @submit.prevent="addTodo">
+            <!-- eslint-disable-next-line vue/html-closing-bracket-spacing -->
+            <!-- eslint-disable-next-line vue/html-self-closing -->
+            <input v-model="newTodo" placeholder="What needs to be done?" />
+          </form>
+        </li>
+      </ul>
       <logo />
       <h1 class="title">
         todo-firesql
@@ -25,11 +41,35 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import Logo from '~/components/Logo.vue'
 
 export default {
   components: {
     Logo
+  },
+  data() {
+    return {
+      newTodo: ''
+    }
+  },
+  methods: {
+    addTodo() {
+      this.$store.commit('todos/add', this.newTodo)
+      this.newTodo = ''
+    },
+    ...mapMutations({
+      toggle: 'todos/toggle'
+    })
+  },
+  // eslint-disable-next-line vue/order-in-components
+  mounted() {
+    window.syncState({
+      table: 'json',
+      pkColumnName: 'id',
+      pk: 101,
+      jsonColumnName: 'json'
+    })
   }
 }
 </script>
