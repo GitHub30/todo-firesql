@@ -1,4 +1,4 @@
-import { vuexfiresqlActions, vuexfiresqlMutations } from '../plugins/index'
+import { vuexfiresqlActions, vuexfiresqlMutations } from 'vuexfiresql'
 
 export const mutations = {
   increment(state) {

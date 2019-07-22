@@ -8648,6 +8648,13 @@ vuex@^3.1.1:
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.1.tgz#0c264bfe30cdbccf96ab9db3177d211828a5910e"
   integrity sha512-ER5moSbLZuNSMBFnEBVGhQ1uCBNJslH9W/Dw2W7GZN23UQA69uapP5GTT9Vm8Trc0PzBSVt6LzF3hGjmv41xcg==
 
+vuexfiresql@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vuexfiresql/-/vuexfiresql-1.0.0.tgz#4c988b96a4315d49bcf08117625ebc3936435cec"
+  integrity sha512-S+k60m/M2fd1jldeG3zLsJjdTZxQVeAxCSjV5XM+kFOuLE4vcuGWpGBLeLjC/IiGocScx9LiT1K5J4Ta8+k7EA==
+  dependencies:
+    firesql.js "^1.0.0"
+
 watchpack@^1.5.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.6.0.tgz#4bc12c2ebe8aa277a71f1d3f14d685c7b446cd00"
