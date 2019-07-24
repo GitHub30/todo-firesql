@@ -1,56 +1,50 @@
 /* eslint-disable no-console */
 <template>
-  <div class="container">
-    <div>
-      <ul>
-        <li v-for="(todo, index) in $store.state.todos.list" :key="index">
-          <!-- eslint-disable-next-line vue/html-closing-bracket-spacing -->
-          <!-- eslint-disable-next-line prettier/prettier -->
-          <input type="checkbox" :checked="todo.done" @change="toggle(todo)">
-          <span :class="{ done: todo.done }">{{ todo.text }}</span>
-        </li>
-        <li>
-          <form @submit.prevent="addTodo">
-            <!-- eslint-disable-next-line vue/html-closing-bracket-spacing -->
-            <!-- eslint-disable-next-line vue/html-self-closing -->
-            <input v-model="newTodo" placeholder="What needs to be done?" />
-          </form>
+  <section class="todoapp">
+    <header class="header">
+      <h1>todos</h1>
+      <input
+        v-model="newTodo"
+        class="new-todo"
+        autofocus
+        autocomplete="off"
+        placeholder="What needs to be done?"
+        @keyup.enter="addTodo"
+      ><!-- eslint-disable-line prettier/prettier -->
+    </header>
+    <section v-show="$store.state.todos.list.length" v-cloak class="main">
+      <input
+        id="toggle-all"
+        class="toggle-all"
+        type="checkbox"
+      ><!-- eslint-disable-line prettier/prettier -->
+      <label for="toggle-all" />
+      <ul class="todo-list">
+        <li
+          v-for="(todo, index) in $store.state.todos.list"
+          :key="index"
+          class="todo"
+          :class="{ completed: todo.done, editing: todo == editedTodo }"
+        >
+          <div class="view">
+            <input :checked="todo.done" class="toggle" type="checkbox" @click="toggle(todo)"><!-- eslint-disable-line prettier/prettier -->
+            <label @dblclick="editTodo(todo)">{{ todo.text }}</label>
+            <button class="destroy" @click="removeTodo(todo)" />
+          </div>
         </li>
       </ul>
-      <logo />
-      <h1 class="title">
-        todo-firesql
-      </h1>
-      <h2 class="subtitle">
-        My luminous Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+    </section>
+  </section>
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
-import Logo from '~/components/Logo.vue'
 
 export default {
-  components: {
-    Logo
-  },
   data() {
     return {
-      newTodo: ''
+      newTodo: '',
+      visibility: 'all'
     }
   },
   methods: {
@@ -59,15 +53,15 @@ export default {
       this.newTodo = ''
     },
     ...mapMutations({
-      toggle: 'todos/toggle'
-    })
+      toggle: 'todos/toggle',
+      removeTodo: 'todos/remove'
+    }),
+    removeCompleted() {},
+    editedTodo() {}
   },
   // eslint-disable-next-line vue/order-in-components
   mounted() {
     this.$db.socket.on('connect', async () => {
-      await this.$db.query(
-        'CREATE TABLE IF NOT EXISTS messages (message_id int NOT NULL AUTO_INCREMENT, username VARCHAR(255), message VARCHAR(255), PRIMARY KEY(message_id))'
-      )
       await this.$db.query(
         'CREATE TABLE IF NOT EXISTS json (id int NOT NULL, json JSON, PRIMARY KEY(id))'
       )
@@ -112,5 +106,11 @@ export default {
 
 .links {
   padding-top: 15px;
+}
+.todoapp h1 {
+  margin-top: 32px;
+}
+[v-cloak] {
+  display: none;
 }
 </style>

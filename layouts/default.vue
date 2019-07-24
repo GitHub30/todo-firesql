@@ -17,6 +17,10 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  margin: auto;
+}
+
 *,
 *:before,
 *:after {
